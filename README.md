@@ -136,4 +136,4 @@ Solutions:
 ## Acknowledgments
 
 - Map images from [AdKats/Procon-1](https://github.com/AdKats/Procon-1)
-- BFBC2 server community
+- @jkuettner for providing a dead easy docker image that works out of the box
