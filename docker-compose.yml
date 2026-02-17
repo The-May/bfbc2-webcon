@@ -42,9 +42,10 @@ services:
 
   bfbc2-dashboard:
     build:
-      context: .
-      dockerfile: Dockerfile
-    image: bfbc2-dashboard:local
+#      context: .
+#      dockerfile: Dockerfile
+#    image: bfbc2-dashboard:local
+    image: ghcr.io/the-may/bfbc2-webcon:latest
     container_name: bfbc2_dashboard
     restart: unless-stopped
     network_mode: "host"
