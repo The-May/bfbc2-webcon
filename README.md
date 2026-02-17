@@ -49,16 +49,15 @@ Access at: `http://localhost:5010`
 
 1. **Create docker-compose.yml:**
 ```yaml
-services:
-  bfbc2-dashboard:
-    image: ghcr.io/YOUR_USERNAME/bfbc2-dashboard:latest
+bfbc2-dashboard:
+    image: ghcr.io/the-may/bfbc2-webcon:latest
     container_name: bfbc2_dashboard
     restart: unless-stopped
     network_mode: "host"
     environment:
       - RCON_HOST=127.0.0.1
-      - RCON_PORTS=48888
-      - RCON_PASSWORD=your_password
+      - RCON_PORTS=48888,48889 
+      - RCON_PASSWORD=langaming1337
       - WEB_PORT=5010
       - TZ=Europe/Berlin
 ```
