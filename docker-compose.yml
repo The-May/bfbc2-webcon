@@ -1,0 +1,52 @@
+services:
+  master-server:
+    image: ghcr.io/jkuettner/bfbc2-master-server
+    restart: always
+    network_mode: "host"
+    tty: true
+    volumes:
+      - "./database:/home/bfbc2/database"
+  rush-server:
+    image: ghcr.io/jkuettner/bfbc2-server
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - master-server
+    environment:
+      MASTER_SERVER: "127.0.0.1"
+      SERVER_TYPE: "rush"
+      SERVER_NAME: "Rush LAN-Server"
+      SERVER_PORT: 19567
+      SERVER_ADMIN_PORT: "0.0.0.0:48888"
+      SERVER_ADMIN_PASSWORD: "langaming"
+      SERVER_MAX_PLAYERS: 32
+
+  sqdm-server:
+    image: ghcr.io/jkuettner/bfbc2-server
+    restart: always
+    network_mode: "host"
+    depends_on:
+      - master-server
+    environment:
+      MASTER_SERVER: "127.0.0.1"
+      SERVER_TYPE: "sqdm"
+      SERVER_NAME: "SQDM LAN-Server"
+      SERVER_PORT: 19568
+      SERVER_ADMIN_PORT: "0.0.0.0:48889"
+      SERVER_ADMIN_PASSWORD: "langaming"
+      SERVER_MAX_PLAYERS: 16
+
+  bfbc2-dashboard:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: bfbc2-dashboard:local
+    container_name: bfbc2_dashboard
+    restart: unless-stopped
+    network_mode: "host"
+    environment:
+      - RCON_HOST=127.0.0.1
+      - RCON_PORTS=48888,48889
+      - RCON_PASSWORD=langaming
+      - WEB_PORT=5010
+      - TZ=Europe/Berlin
