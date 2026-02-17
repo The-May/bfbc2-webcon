@@ -41,15 +41,12 @@ services:
       SERVER_MAX_PLAYERS: 16
 
   bfbc2-dashboard:
-    build:
-#      context: .
-#      dockerfile: Dockerfile
-#    image: bfbc2-dashboard:local
     image: ghcr.io/the-may/bfbc2-webcon:latest
     container_name: bfbc2_dashboard
     restart: unless-stopped
     network_mode: "host"
     environment:
+      #keep 127.0.0.1 since we use hostmode
       - RCON_HOST=127.0.0.1
       #we can use multiple servers comma separated. 
       #Otherwise just use one number if you want to manage one single server. 
