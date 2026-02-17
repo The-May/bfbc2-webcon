@@ -1,3 +1,6 @@
+#####
+#this part uses the bfbc2 docker containers from jkuettner. and is used as an example to get an idea on
+####
 services:
   master-server:
     image: ghcr.io/jkuettner/bfbc2-master-server
@@ -6,6 +9,7 @@ services:
     tty: true
     volumes:
       - "./database:/home/bfbc2/database"
+
   rush-server:
     image: ghcr.io/jkuettner/bfbc2-server
     restart: always
@@ -18,7 +22,7 @@ services:
       SERVER_NAME: "Rush LAN-Server"
       SERVER_PORT: 19567
       SERVER_ADMIN_PORT: "0.0.0.0:48888"
-      SERVER_ADMIN_PASSWORD: "langaming"
+      SERVER_ADMIN_PASSWORD: "langaming1337"
       SERVER_MAX_PLAYERS: 32
 
   sqdm-server:
@@ -33,7 +37,7 @@ services:
       SERVER_NAME: "SQDM LAN-Server"
       SERVER_PORT: 19568
       SERVER_ADMIN_PORT: "0.0.0.0:48889"
-      SERVER_ADMIN_PASSWORD: "langaming"
+      SERVER_ADMIN_PASSWORD: "langaming1337"
       SERVER_MAX_PLAYERS: 16
 
   bfbc2-dashboard:
@@ -46,7 +50,13 @@ services:
     network_mode: "host"
     environment:
       - RCON_HOST=127.0.0.1
-      - RCON_PORTS=48888,48889
-      - RCON_PASSWORD=langaming
+      #we can use multiple servers comma separated. 
+      #Otherwise just use one number if you want to manage one single server. 
+      #Use the Ports that are defined in SERVER_ADMIN_PORT for EACH server.
+      #This means we only need one bfbc2-dashboard - instance
+      - RCON_PORTS=48888,48889 
+      #use the same Password like SERVER_ADMIN_PASSWOR
+      - RCON_PASSWORD=langaming1337
+      #will be availe over: http://ip.of.your.dockerserver:5010/ -> i would not change it, dont know if this breakt.
       - WEB_PORT=5010
       - TZ=Europe/Berlin
